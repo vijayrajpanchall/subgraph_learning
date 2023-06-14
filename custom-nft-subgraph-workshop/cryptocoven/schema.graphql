@@ -1,0 +1,35 @@
+type Token @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenURI: String!
+  externalURL: String!
+  ipfsURI: String!
+  image: String!
+  name: String!
+  description: String!
+  type: String!
+  sun: String!
+  moon: String!
+  rising: String!
+  updatedAtTimestamp: BigInt!
+  owner: User!
+}
+
+type User @entity {
+  id: ID!
+  tokens: [Token!]! @derivedFrom(field: "owner")
+}
+
+type _Schema_ @fulltext(
+  name: "Token",
+  language: en,
+  algorithm: rank,
+  include: [
+    { field: "name", weight: 1 },
+    { field: "description", weight: 1 },
+    { field: "type", weight: 1 },
+    { field: "sun", weight: 1 },
+    { field: "moon", weight: 1 },
+    { field: "rising", weight: 1 },
+  ]
+)
